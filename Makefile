@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ymatsui <ymatsui@student.42.fr>            +#+  +:+       +#+         #
+#    By: ymatsui <ymatsui@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 16:33:15 by ymatsui           #+#    #+#              #
-#    Updated: 2023/11/10 14:40:41 by ymatsui          ###   ########.fr        #
+#    Updated: 2023/12/04 12:20:16 by ymatsui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,20 +26,46 @@ endif
 all: $(NAME)
 
 %.o: %.c
+	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
+	@echo "Creating archive $(NAME)"
 	@ar rcs $(NAME) $(OBJS)
 
-bonus:
-	@make BONUS_FLAG=1 all
-
 clean:
-	@/bin/rm -f $(OBJS) $(OBJB)
+	@echo "Cleaning mandatory object files..."
+	@for obj in $(OBJS); do \
+		if [ -f $$obj ]; then \
+			echo "Cleaning $$obj"; \
+			/bin/rm -f $$obj; \
+		else \
+			echo "$$obj is already cleaned"; \
+		fi \
+	done
+	@echo "Cleaning bonus object files..."
+	@for obj in $(OBJB); do \
+		if [ -f $$obj ]; then \
+			echo "Cleaning $$obj"; \
+			/bin/rm -f $$obj; \
+		else \
+			echo "$$obj is already cleaned"; \
+		fi \
+	done
 
 fclean: clean
-	@/bin/rm -f $(NAME)
+	@if [ -f $(NAME) ]; then \
+		echo "Cleaning $(NAME)"; \
+		/bin/rm -f $(NAME); \
+	else \
+		echo "$(NAME) is already cleaned"; \
+	fi
 
-re: fclean all
+re:
+	@$(MAKE) fclean all
+
+bonus:
+	@echo "Making bonus files"
+	@make BONUS_FLAG=1 all
 
 .PHONY: all clean fclean re bonus

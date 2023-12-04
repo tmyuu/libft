@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ymatsui <ymatsui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ymatsui <ymatsui@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 11:54:07 by ymatsui           #+#    #+#             */
-/*   Updated: 2023/11/12 20:00:38 by ymatsui          ###   ########.fr       */
+/*   Updated: 2023/12/04 12:08:21 by ymatsui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	int	count;
-
-	count = ft_lstsize(lst);
+	if (ft_lstsize(lst))
+		return (NULL);
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
